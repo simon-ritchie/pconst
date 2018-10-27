@@ -174,6 +174,15 @@ class TestConstDict(TestCase):
         err_msg = 'Error nor raised when update dict values.'
         raise AssertionError(err_msg)
 
+    def test_pop(self):
+        const_dict = const.ConstDict(dict_val={'a': 100})
+        try:
+            _ = const_dict.pop('a')
+        except const.ConstantError:
+            return
+        err_msg = 'Error not raised when pop method is called.'
+        raise AssertionError(err_msg)
+
 
 class TestConstList(TestCase):
 

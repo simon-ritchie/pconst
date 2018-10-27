@@ -143,8 +143,26 @@ class ConstDict(dict):
         """
         This method will always raise error to disallow dict
         value update.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
         """
         err_msg = 'To update dict values is not allowed.'
+        raise ConstantError(err_msg)
+
+    def pop(self, *args):
+        """
+        This method will always raise error to disallow dict
+        value update.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'pop method is disallowed to not update dict value.'
         raise ConstantError(err_msg)
 
 
