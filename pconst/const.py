@@ -29,7 +29,7 @@ class ConstantError(Exception):
         super(ConstantError, self).__init__(err_msg)
 
 
-class const(object):
+class Const(object):
     """
     The class that provides const-like function on Python.
     This will set as module, so you can skip initialization.
@@ -66,7 +66,7 @@ class const(object):
     _is_constructor = True
 
     def __init__(self):
-        super(const, self).__init__()
+        super(Const, self).__init__()
         self.ConstantError = ConstantError
         self._is_constructor = False
 
@@ -150,6 +150,12 @@ class const(object):
         constants deletion.
         i.e., del const.a will raise ConstantError.
 
+        Raises
+        ------
+        ConstantError
+            When attempt to delete attribute, error will
+            always be raised.
+
         Parameters
         ----------
         name : str
@@ -164,4 +170,4 @@ class const(object):
             raise ConstantError(err_msg)
 
 
-sys.modules[__name__] = const()
+sys.modules[__name__] = Const()

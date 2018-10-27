@@ -72,7 +72,7 @@ class TestConst(TestCase):
     def test___delattr__(self):
         try:
             del const.a
-        except ConstantError:
+        except const.ConstantError:
             return
         err_msg = 'Not raised when constant deleted.'
         raise AssertionError(err_msg)
