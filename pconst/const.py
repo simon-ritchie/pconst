@@ -139,6 +139,14 @@ class ConstDict(dict):
         err_msg = 'To reset dict values is not allowed.'
         raise ConstantError(err_msg)
 
+    def update(self, *args, **kwargs):
+        """
+        This method will always raise error to disallow dict
+        value update.
+        """
+        err_msg = 'To update dict values is not allowed.'
+        raise ConstantError(err_msg)
+
 
 class ConstList(object):
     """
