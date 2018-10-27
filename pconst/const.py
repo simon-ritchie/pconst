@@ -349,6 +349,10 @@ class Const(object):
             const_name=name)
         if not is_settable:
             raise ConstantError(ERR_MSG_NOT_SETTABLE_CONST_NAME)
+        if isinstance(value, dict):
+            value = ConstDict(dict_val=value)
+        if isinstance(value, list):
+            value = ConstList(list_value=value)
         self.__dict__[name] = value
 
     def __delattr__(self, name):

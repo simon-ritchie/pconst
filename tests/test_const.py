@@ -90,12 +90,17 @@ class TestConst(TestCase):
     def test___setattr__(self):
         const.b = 'apple'
         assert_equal(const.b, 'apple')
-
         assert_raises_if_const_added(
             const_name='b', const_value='orange')
-
         assert_raises_if_const_added(
             const_name='ConstantError', const_value='orange')
+
+        const.d = {'apple': 100}
+        assert_true(isinstance(const.d, const.ConstDict))
+        assert_equal(const.d['apple'], 100)
+
+        const.e = ['100']
+        assert_true(isinstance(const.e, const.ConstList))
 
     def test___delattr__(self):
         try:
