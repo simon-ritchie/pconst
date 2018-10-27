@@ -145,6 +145,16 @@ class const(object):
         self.__dict__[name] = value
 
     def __delattr__(self, name):
+        """
+        This method will raise error in order to prevent the
+        constants deletion.
+        i.e., del const.a will raise ConstantError.
+
+        Parameters
+        ----------
+        name : str
+            Constant name.
+        """
         err_msg = 'Constant values are not deletable.'
         raise ConstantError(err_msg)
 

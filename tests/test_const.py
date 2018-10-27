@@ -68,3 +68,11 @@ class TestConst(TestCase):
 
         assert_raises_if_const_added(
             const_name='ConstantError', const_value='orange')
+
+    def test___delattr__(self):
+        try:
+            del const.a
+        except ConstantError:
+            return
+        err_msg = 'Not raised when constant deleted.'
+        raise AssertionError(err_msg)
