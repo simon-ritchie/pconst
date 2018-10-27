@@ -29,7 +29,7 @@ class ConstantError(Exception):
         super(ConstantError, self).__init__(err_msg)
 
 
-class ConstDict(object):
+class ConstDict(dict):
     """
     The class that makes dict value not editable.
 
@@ -42,21 +42,53 @@ class ConstDict(object):
     ----------
     _original_dict : dict
         Original dict that passed to argument.
+    _is_constructor : bool
+        If current timing is executing constructor,
+        this bool will set to True.
 
     Raises
     ------
-    ConstantError
-        If the passed dict value has the key of "_original_dict".
     ValueError
         If the passed value type is not dict.
     """
 
+    _is_constructor = False
+
     def __init__(self, dict_val):
+        self.__dict__['_is_constructor'] = True
         super(ConstDict, self).__init__()
         if not isinstance(dict_val, dict):
             err_msg = 'The type of passed value is not dict.'
             raise ValueError(err_msg)
+
         self._original_dict = dict_val
+        self._is_constructor = False
+
+
+    def __setitem__(self, key, item):
+        """
+        This method will always raise error except during executing
+        constructor in order to prevent the dict value update.
+        e.g., const.yourdict['a'] = 100 will raise ConstantError.
+
+        Parameters
+        ----------
+        key : str
+            Dict key.
+        item : *
+            Dict Value
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error except during
+            executing constructor.
+        """
+
+        if not self._is_constructor:
+            err_msg = "Update of dict value is not allowed."
+            raise ConstantError(err_msg)
+        self.__dict__[key] = value
 
 
 class ConstList(object):
@@ -101,6 +133,9 @@ class Const(object):
         The class that makes dict value not editable.
     ConstList : class
         The class that makes list value not editable.
+    _is_constructor : bool
+        If current timing is executing constructor,
+        this bool will set to True.
 
     Examples
     --------
@@ -125,7 +160,6 @@ class Const(object):
     - '_has_key'
     - '_is_settable_const_name'
     - '_is_constructor'
-    - '_original_dict'
     """
 
     _is_constructor = True
@@ -215,7 +249,7 @@ class Const(object):
         """
         This method will raise error in order to prevent the
         constants deletion.
-        i.e., del const.a will raise ConstantError.
+        e.g., del const.a will raise ConstantError.
 
         Raises
         ------

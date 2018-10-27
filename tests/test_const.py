@@ -119,11 +119,6 @@ class TestConst(TestCase):
 class TestConstDict(TestCase):
 
     def test___init__(self):
-        args = [{'_original_list': 100}]
-        assert_class_constructor_will_raise_error(
-            target_class=const.ConstDict,
-            error_class=const.ConstantError,
-            args=args)
 
         args = [100]
         assert_class_constructor_will_raise_error(
@@ -132,9 +127,20 @@ class TestConstDict(TestCase):
             args=args)
 
         const_dict = const.ConstDict(dict_val={'apple': 100})
+        assert_false(const_dict._is_constructor)
         assert_equal(
             const_dict._original_dict,
             {'apple': 100})
+
+    def test___setitem__(self):
+        const_dict =  const.ConstDict(dict_val={'a': 100})
+        try:
+            const_dict['a'] = 200
+        except const.ConstantError:
+            print(503)
+            return
+        err_msg = 'Update of dict value is not raise error.'
+        raise AssertionError(err_msg)
 
 
 class TestConstList(TestCase):
