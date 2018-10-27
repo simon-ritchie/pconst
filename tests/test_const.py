@@ -131,6 +131,7 @@ class TestConstDict(TestCase):
         assert_equal(
             const_dict._original_dict,
             {'apple': 100})
+        assert_equal(const_dict['apple'], 100)
 
     def test___setitem__(self):
         const_dict =  const.ConstDict(dict_val={'a': 100})
@@ -140,6 +141,11 @@ class TestConstDict(TestCase):
             return
         err_msg = 'Update of dict value is not raise error.'
         raise AssertionError(err_msg)
+
+    def test___repr__(self):
+        const_dict = const.ConstDict(dict_val={'a': 200})
+        output_str = const_dict.__repr__()
+        assert_equal(output_str, "{'a': 200}")
 
 
 class TestConstList(TestCase):

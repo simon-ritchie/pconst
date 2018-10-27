@@ -51,7 +51,6 @@ class ConstDict(dict):
     ValueError
         If the passed value type is not dict.
     """
-
     _is_constructor = False
 
     def __init__(self, dict_val):
@@ -63,7 +62,6 @@ class ConstDict(dict):
 
         self._original_dict = dict_val
         self._is_constructor = False
-
 
     def __setitem__(self, key, item):
         """
@@ -84,11 +82,30 @@ class ConstDict(dict):
             This method will always raise error except during
             executing constructor.
         """
-
         if not self._is_constructor:
             err_msg = "Update of dict value is not allowed."
             raise ConstantError(err_msg)
         self.__dict__[key] = item
+
+    def __repr__(self):
+        """
+        This method will be called when ConstDict object will
+        pass to print function. Output will skip class attributes,
+        like _is_constructor.
+
+        Returns
+        -------
+        output_str : str
+            The text that display to console or output cell.
+
+        Examples
+        --------
+        >>> from pconst import const
+        >>> const_dict = const.ConstDict({'a': 100})
+        >>> print(const_dict)
+        {'a': 100}
+        """
+        return str(self._original_dict)
 
 
 class ConstList(object):
