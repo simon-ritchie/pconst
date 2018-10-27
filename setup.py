@@ -1,7 +1,7 @@
 # coding: UTF-8
 
 import os
-from setuptools import setup, find_package
+from setuptools import setup, find_packages
 
 with open('./README.md', 'r') as f:
     readme_str = f.read()
@@ -16,7 +16,7 @@ setup(
     maintainer_email='antisocial.sid2@gmail.com',
     description='"pconst" library provide you const-like function on Python.',
     long_description=readme_str,
-    packages=find_package(),
+    packages=find_packages(),
     install_requires=[],
     license='MIT',
     classifiers=[
