@@ -4,7 +4,6 @@
 This module provides const-like function on Python.
 """
 
-import sys
 
 NOT_SETTABLE_CONST_NAMES = [
     'ConstantError',
@@ -85,7 +84,7 @@ class ConstDict(dict):
             executing constructor.
         """
         if not self._is_constructor:
-            err_msg = "Update of dict value is not allowed."
+            err_msg = "Update dict value is not allowed."
             raise ConstantError(err_msg)
         self.__dict__[key] = item
 
@@ -125,6 +124,19 @@ class ConstDict(dict):
             This method will always raise error.
         """
         err_msg = 'Deletion of dict value is not allowed.'
+        raise ConstantError(err_msg)
+
+    def clear(self):
+        """
+        This method will always raise error to disallow dict
+        value deletion.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'To reset dict values is not allowed.'
         raise ConstantError(err_msg)
 
 
@@ -325,6 +337,3 @@ class Const(object):
         if not self._has_key(name):
             err_msg = 'Constant value of "%s" is not defined.' % name
             raise ConstantError(err_msg)
-
-
-sys.modules[__name__] = Const()

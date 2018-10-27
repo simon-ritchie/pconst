@@ -1,4 +1,6 @@
 - Replace ConstDict dict and list values to ConstDict or ConstList recursively.
   - Also replace ConstList argument values to ConstDict or ConstList.
 - Replace ConstList super class to list.
+  - Maybe using tuple will be better than list.
+    - Before conver to tuple, replace argument values to ConstDict and ConstList.
   - Pass the argument to sumer method.

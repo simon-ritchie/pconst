@@ -156,6 +156,15 @@ class TestConstDict(TestCase):
         err_msg = 'Error not raised when delete dict value.'
         raise AssertionError(err_msg)
 
+    def test_clear():
+        const_dict = const.ConstDict(dict_val={'a': 100})
+        try:
+            const_dict.clear()
+        except const.ConstantError:
+            return
+        err_msg = 'Error not raised when clear dict values'.
+        raise AssertionError(err_msg)
+
 
 class TestConstList(TestCase):
 

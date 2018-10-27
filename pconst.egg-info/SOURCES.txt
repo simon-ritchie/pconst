@@ -1,7 +1,7 @@
 README.md
 setup.py
 pconst/__init__.py
-pconst/test_pconst.py
+pconst/const.py
 pconst.egg-info/PKG-INFO
 pconst.egg-info/SOURCES.txt
 pconst.egg-info/dependency_links.txt
