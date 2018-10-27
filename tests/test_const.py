@@ -147,6 +147,15 @@ class TestConstDict(TestCase):
         output_str = const_dict.__repr__()
         assert_equal(output_str, "{'a': 200}")
 
+    def test___delitem__(self):
+        const_dict = const.ConstDict(dict_val={'a': 300})
+        try:
+            del const_dict['a']
+        except const.ConstantError:
+            return
+        err_msg = 'Error not raised when delete dict value.'
+        raise AssertionError(err_msg)
+
 
 class TestConstList(TestCase):
 

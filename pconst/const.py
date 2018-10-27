@@ -8,6 +8,8 @@ import sys
 
 NOT_SETTABLE_CONST_NAMES = [
     'ConstantError',
+    'ConstDict',
+    'ConstList',
     '_has_key',
     '_is_settable_const_name',
     '_is_constructor',
@@ -106,6 +108,24 @@ class ConstDict(dict):
         {'a': 100}
         """
         return str(self._original_dict)
+
+    def __delitem__(self, key):
+        """
+        This method will always raise error to disallow dict
+        value deletion.
+
+        Parameters
+        ----------
+        key : str
+            Key of the dict.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'Deletion of dict value is not allowed.'
+        raise ConstantError(err_msg)
 
 
 class ConstList(object):

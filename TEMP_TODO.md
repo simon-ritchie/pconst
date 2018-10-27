@@ -1,0 +1,4 @@
+- Replace ConstDict dict and list values to ConstDict or ConstList recursively.
+  - Also replace ConstList argument values to ConstDict or ConstList.
+- Replace ConstList super class to list.
+  - Pass the argument to sumer method.
