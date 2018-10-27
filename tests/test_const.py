@@ -40,6 +40,34 @@ def assert_raises_if_const_added(const_name, const_value):
     raise AssertionError(err_msg)
 
 
+def assert_class_constructor_will_raise_error(
+        target_class, error_class, args):
+    """
+    Check the specified class constructor will raise exception.
+
+    Parameters
+    ----------
+    target_class : class
+        The class that will be checked.
+    error_class : class
+        The expected error class.
+    args : list
+        The arguments that will be passed to constructor.
+
+    Raises
+    ------
+    AssertionError
+        If specified error not raised.
+    """
+    try:
+        _ = target_class(*args)
+    except error_class:
+        return
+    err_msg = 'Specified error not raised on constructor.'
+    err_msg += '\ntarget class: %s' % target_class
+    err_msg += '\n error class: %s' % error_class
+
+
 class TestConst(TestCase):
 
     def test__has_key(self):
@@ -86,3 +114,24 @@ class TestConst(TestCase):
         except const.ConstantError:
             return
         raise AssertionError('ConstantError is not raised.')
+
+
+class TestConstDict(TestCase):
+
+    def test___init__(self):
+        args = [{'_original_list': 100}]
+        assert_class_constructor_will_raise_error(
+            target_class=const.ConstDict,
+            error_class=const.ConstantError,
+            args=args)
+
+        args = [100]
+        assert_class_constructor_will_raise_error(
+            target_class=const.ConstDict,
+            error_class=ValueError,
+            args=args)
+
+        const_dict = const.ConstDict(dict_val={'apple': 100})
+        assert_equal(
+            const_dict._original_dict,
+            {'apple': 100})

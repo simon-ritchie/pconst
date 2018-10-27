@@ -29,6 +29,51 @@ class ConstantError(Exception):
         super(ConstantError, self).__init__(err_msg)
 
 
+class ConstDict(object):
+    """
+    The class that makes dict value not editable.
+
+    Parameters
+    ----------
+    dict_val : dict
+        The dict value that will be set unchangeable recursively.
+
+    Attributes
+    ----------
+    _original_dict : dict
+        Original dict that passed to argument.
+
+    Raises
+    ------
+    ConstantError
+        If the passed dict value has the key of "_original_dict".
+    ValueError
+        If the passed value type is not dict.
+    """
+
+    def __init__(self, dict_val):
+        super(ConstDict, self).__init__()
+        if not isinstance(dict_val, dict):
+            err_msg = 'The type of passed value is not dict.'
+            raise ValueError(err_msg)
+        self._original_dict = dict_val
+
+
+class ConstList(object):
+    """
+    The class that makes list value not editable.
+
+    Parameters
+    ----------
+    list_value : list
+        The list value that will be set unchangeable recursively.
+    """
+
+    def __init__(self, list_value):
+        super(ConstList, self).__init__()
+        self._original_list = list_value
+
+
 class Const(object):
     """
     The class that provides const-like function on Python.
@@ -39,6 +84,10 @@ class Const(object):
     ConstantError : class
         Error class that will use when invalid constant
         manipulation is done.
+    ConstDict : class
+        The class that makes dict value not editable.
+    ConstList : class
+        The class that makes list value not editable.
 
     Examples
     --------
@@ -58,9 +107,12 @@ class Const(object):
     Following names are used by this class, so you can't set the
     same constant names (e.g., const.ConstantError = 'apple').
     - 'ConstantError'
-    - _has_key
-    - _is_settable_const_name
-    - _is_constructor
+    - 'ConstDict'
+    - 'ConstList'
+    - '_has_key'
+    - '_is_settable_const_name'
+    - '_is_constructor'
+    - '_original_dict'
     """
 
     _is_constructor = True
@@ -68,6 +120,8 @@ class Const(object):
     def __init__(self):
         super(Const, self).__init__()
         self.ConstantError = ConstantError
+        self.ConstDict = ConstDict
+        self.ConstList = ConstList
         self._is_constructor = False
 
     def _has_key(self, name):
