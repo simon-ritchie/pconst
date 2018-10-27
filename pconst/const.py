@@ -4,6 +4,7 @@
 This module provides const-like function on Python.
 """
 
+from copy import deepcopy
 
 NOT_SETTABLE_CONST_NAMES = [
     'ConstantError',
@@ -59,10 +60,40 @@ class ConstDict(dict):
         if not isinstance(dict_val, dict):
             err_msg = 'The type of passed value is not dict.'
             raise ValueError(err_msg)
+        self._original_dict = deepcopy(dict_val)
+        dict_val = self._replace_dict_val_to_const(dict_val=dict_val)
         super(ConstDict, self).__init__(dict_val)
 
-        self._original_dict = dict_val
         self._is_constructor = False
+
+    def _replace_dict_val_to_const(self, dict_val):
+        """
+        Replace values in dict to ConstDict or ConstList.
+
+        Parameters
+        ----------
+        dict_val : dict
+            All values that this dict has will replace to ConstDict
+            or CostList if values are dict or list.
+
+        Returns
+        -------
+        dict_val : dict
+            Replaced dict.
+        """
+        for key, value in dict_val.items():
+            if (not isinstance(value, dict)
+                    and not isinstance(value, list)):
+                continue
+
+            if isinstance(value, dict):
+                dict_val[key] = ConstDict(dict_val=value)
+                continue
+
+            if isinstance(value, list):
+                dict_val[key] = ConstList(list_value=value)
+                continue
+        return dict_val
 
     def __setitem__(self, key, item):
         """

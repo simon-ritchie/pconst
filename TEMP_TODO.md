@@ -4,3 +4,4 @@
   - Maybe using tuple will be better than list.
     - Before conver to tuple, replace argument values to ConstDict and ConstList.
   - Pass the argument to sumer method.
+  - Add 'd' key value's check to test__replace_dict_val_to_const function after ConstList updated.

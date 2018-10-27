@@ -183,6 +183,14 @@ class TestConstDict(TestCase):
         err_msg = 'Error not raised when pop method is called.'
         raise AssertionError(err_msg)
 
+    def test__replace_dict_val_to_const(self):
+        dict_val = {'a': {'b': 100}, 'c': 200, 'd': [100]}
+        const_dict = const.ConstDict(dict_val=dict_val)
+        assert_true(isinstance(const_dict['a'], const.ConstDict))
+        assert_equal(const_dict['a']['b'], 100)
+        assert_equal(const_dict['c'], 200)
+        assert_true(isinstance(const_dict['d'], const.ConstList))
+
 
 class TestConstList(TestCase):
 
