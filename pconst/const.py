@@ -67,10 +67,23 @@ class ConstList(object):
     ----------
     list_value : list
         The list value that will be set unchangeable recursively.
+
+    Attributes
+    ----------
+    _original_list : list
+        Original list that passed to argument.
+
+    Raises
+    ------
+    ValueError
+        If the passed value is not list.
     """
 
     def __init__(self, list_value):
         super(ConstList, self).__init__()
+        if not isinstance(list_value, list):
+            err_msg = 'The type of passed value is not list.'
+            raise ValueError(err_msg)
         self._original_list = list_value
 
 

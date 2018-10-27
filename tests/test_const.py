@@ -135,3 +135,18 @@ class TestConstDict(TestCase):
         assert_equal(
             const_dict._original_dict,
             {'apple': 100})
+
+
+class TestConstList(TestCase):
+
+    def test___init__(self):
+        args = [100]
+        assert_class_constructor_will_raise_error(
+            target_class=const.ConstList,
+            error_class=ValueError,
+            args=args)
+
+        const_list = const.ConstList(list_value=[100, 200])
+        assert_equal(
+            const_list._original_list,
+            [100, 200])
