@@ -76,3 +76,13 @@ class TestConst(TestCase):
             return
         err_msg = 'Not raised when constant deleted.'
         raise AssertionError(err_msg)
+
+    def test___getattr__(self):
+        const.c = 100
+        c = const.c
+
+        try:
+            d = const.d
+        except const.ConstantError:
+            return
+        raise AssertionError('ConstantError is not raised.')

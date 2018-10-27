@@ -51,11 +51,11 @@ class Const(object):
     >>> const.a = 'apple'
     >>> const.a = 'orange'
     ...
-    ConstantError: constant value of "a" is not editable.
+    ConstantError: Constant value of "a" is not editable.
 
     Notes
     -----
-    Following names are used by this class, so you can't set
+    Following names are used by this class, so you can't set the
     same constant names (e.g., const.ConstantError = 'apple').
     - 'ConstantError'
     - _has_key
@@ -77,7 +77,7 @@ class Const(object):
         Parameters
         ----------
         name : str
-            Target attribute name.
+            Attribute name.
 
         Returns
         -------
@@ -95,7 +95,7 @@ class Const(object):
         Parameters
         ----------
         const_name : str
-            Target constant name.
+            Constant name.
 
         Notes
         -----
@@ -118,7 +118,7 @@ class Const(object):
 
     def __setattr__(self, name, value):
         """
-        Aet value to class attribute. When property will updated,
+        Set value to class attribute. When property will updated,
         this method will be called (e.g., const.a = 100).
 
         Parameters
@@ -165,6 +165,25 @@ class Const(object):
         raise ConstantError(err_msg)
 
     def __getattr__(self, name):
+        """
+        Get the attribute value of specified constant name. When
+        accessed const property, this method will be called
+        (e.g., a = const.a).
+
+        Parameters
+        ----------
+        name : str
+            Constant name.
+
+        Returns
+        -------
+        Constant value.
+
+        Raises
+        ------
+        ConstantError
+            If the specified constant is not defined.
+        """
         if not self._has_key(name):
             err_msg = 'Constant value of "%s" is not defined.' % name
             raise ConstantError(err_msg)
