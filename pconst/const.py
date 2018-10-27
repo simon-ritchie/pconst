@@ -8,6 +8,8 @@ import sys
 
 NOT_SETTABLE_CONST_NAMES = [
     'ConstantError',
+    '_has_key',
+    '_is_settable_const_name',
 ]
 
 
@@ -63,7 +65,44 @@ class const(object):
         self.ConstantError = ConstantError
 
     def _has_key(self, name):
+        """
+        Return True if this class has the attribute of specified name.
+
+        Parameters
+        ----------
+        name : str
+            Target attribute name.
+
+        Returns
+        -------
+        result : bool
+            Return True if this class has the attribute of
+            specified name.
+        """
         return name in self.__dict__
+
+    def _is_settable_const_name(self, const_name):
+        """
+        Return True if specified const_name is not in
+        NOT_SETTABLE_CONST_NAMES list.
+
+        Parameters
+        ----------
+        const_name : str
+            Target constant name.
+
+        Returns
+        -------
+        result : bool
+            Return True if specified const_name is not in
+            NOT_SETTABLE_CONST_NAMES list.
+            e.g., If const_name is 'ConstantError', then
+            result will be False.
+        """
+        is_in = const_name in NOT_SETTABLE_CONST_NAMES
+        if is_in:
+            return False
+        return True
 
     def __setattr__(self, name, value):
         if self._has_key(name):

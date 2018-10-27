@@ -4,10 +4,6 @@ The test module of const.py.
 
 from __future__ import print_function
 import sys
-try:
-    from importlib import reload
-except Exception:
-    pass
 sys.path.append('../')
 
 from unittest import TestCase
@@ -26,4 +22,12 @@ class TestConst(TestCase):
         result_bool = const._has_key('a')
         assert_true(result_bool)
 
+    def test__is_settable_const_name(self):
+        from pconst import const
+        result_bool = const._is_settable_const_name(
+            const_name='ConstantError')
+        assert_false(result_bool)
 
+        result_bool = const._is_settable_const_name(
+            const_name='apple')
+        assert_true(result_bool)
