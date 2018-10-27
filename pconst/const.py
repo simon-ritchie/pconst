@@ -117,6 +117,24 @@ class const(object):
         return True
 
     def __setattr__(self, name, value):
+        """
+        Aet value to class attribute. When property will updated,
+        this method will be called (e.g., const.a = 100).
+
+        Parameters
+        ----------
+        name : str
+            Constant name.
+        value : *
+            Constant value.
+
+        Raises
+        ------
+        ConstantError
+            - If the same constant name attibute already exists.
+            - If the constant name is not acceptable because of
+                used by class (e.g., name='ConstantError').
+        """
         if self._has_key(name):
             err_msg = 'Constant value of "%s" is not editable.' % name
             raise ConstantError(err_msg)
