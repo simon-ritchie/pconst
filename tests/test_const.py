@@ -137,7 +137,6 @@ class TestConstDict(TestCase):
         try:
             const_dict['a'] = 200
         except const.ConstantError:
-            print(503)
             return
         err_msg = 'Update of dict value is not raise error.'
         raise AssertionError(err_msg)

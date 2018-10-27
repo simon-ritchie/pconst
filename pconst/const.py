@@ -56,10 +56,10 @@ class ConstDict(dict):
 
     def __init__(self, dict_val):
         self.__dict__['_is_constructor'] = True
-        super(ConstDict, self).__init__()
         if not isinstance(dict_val, dict):
             err_msg = 'The type of passed value is not dict.'
             raise ValueError(err_msg)
+        super(ConstDict, self).__init__(dict_val)
 
         self._original_dict = dict_val
         self._is_constructor = False
@@ -88,7 +88,7 @@ class ConstDict(dict):
         if not self._is_constructor:
             err_msg = "Update of dict value is not allowed."
             raise ConstantError(err_msg)
-        self.__dict__[key] = value
+        self.__dict__[key] = item
 
 
 class ConstList(object):
