@@ -318,6 +318,24 @@ class ConstList(list):
         err_msg = 'pop method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
+    def remove(self, value):
+        """
+        This method will always raise error to disallow list
+        value update.
+
+        Parameters
+        ----------
+        value : *
+            The value that will be removed from list.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'remove method is disallowed to not update list value.'
+        raise ConstantError(err_msg)
+
 
 class Const(object):
     """

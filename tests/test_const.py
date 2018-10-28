@@ -277,3 +277,12 @@ class TestConstList(TestCase):
             return
         err_msg = 'Error not raised when pop method is called.'
         raise AssertionError(err_msg)
+
+    def test_remove(self):
+        const_list = const.ConstList(list_value=[100, 200])
+        try:
+            const_list.remove(100)
+        except const.ConstantError:
+            return
+        err_msg = 'Error not raised when remove method is called.'
+        raise AssertionError(err_msg)

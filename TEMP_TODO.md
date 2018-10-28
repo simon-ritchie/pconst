@@ -1,5 +1,4 @@
 - Disable ConstList values updates.
-  - pop
   - remove
   - reverse
   - sort
