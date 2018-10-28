@@ -262,6 +262,24 @@ class ConstList(list):
         err_msg = 'clear method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
+    def extend(self, iterable):
+        """
+        This method will always raise error to disallow list
+        value update.
+
+        Parameters
+        ----------
+        iterable : array-like
+            The iterable object that will be appended to list.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'extend method is disallowed to not update list value.'
+        raise ConstantError(err_msg)
+
 
 class Const(object):
     """
