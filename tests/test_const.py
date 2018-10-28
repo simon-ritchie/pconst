@@ -60,7 +60,6 @@ def assert_class_constructor_will_raise_error(
         If specified error not raised.
     """
     try:
-        print('args', args)
         _ = target_class(*args)
     except error_class:
         return
@@ -102,6 +101,7 @@ class TestConst(TestCase):
 
         const.e = ['100']
         assert_true(isinstance(const.e, const.ConstList))
+        assert_equal(const.e[0], '100')
 
     def test___delattr__(self):
         try:
@@ -196,6 +196,7 @@ class TestConstDict(TestCase):
         assert_equal(const_dict['a']['b'], 100)
         assert_equal(const_dict['c'], 200)
         assert_true(isinstance(const_dict['d'], const.ConstList))
+        assert_equal(const_dict['d'][0], 100)
 
 
 class TestConstList(TestCase):
@@ -231,3 +232,12 @@ class TestConstList(TestCase):
         assert_equal(const_list[1][0], 300)
         assert_equal(const_list[1][1], 400)
         assert_equal(const_list[2], 500)
+
+    def test_append(self):
+        const_list = const.ConstList(list_value=[100])
+        try:
+            const_list.append(200)
+        except const.ConstantError:
+            return
+        err_msg = 'Error not raised when append method is called.'
+        raise AssertionError(err_msg)

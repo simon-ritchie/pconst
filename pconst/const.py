@@ -231,6 +231,19 @@ class ConstList(list):
                 continue
         super(ConstList, self).__init__(list_value)
 
+    def append(self, object):
+        """
+        This method will always raise error to disallow list
+        value update.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'append method is disallowed to not update list value.'
+        raise ConstantError(err_msg)
+
 
 class Const(object):
     """

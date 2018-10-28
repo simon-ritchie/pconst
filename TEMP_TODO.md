@@ -1,4 +1,14 @@
-- [done]Replace ConstList super class to list.
-  - [done]Pass the argument to super method.
-  - Add 'd' key value's check to test__replace_dict_val_to_const function after ConstList updated.
-  - Add 'e' key value's check to TestConst.test___setattr__ function after ConstList updated.
+- Disable ConstList values updates.
+  - append
+  - clear
+  - extend
+  - insert
+  - pop
+  - remove
+  - reverse
+  - sort
+  - \__delitem__
+  - \__reversed__
+  - \__setitem__
+- Adjust ConstList methods.
+  - \__repr__
