@@ -1,5 +1,4 @@
 - Disable ConstList values updates.
-  - remove
   - reverse
   - sort
   - \__delitem__

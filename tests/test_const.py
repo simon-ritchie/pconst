@@ -286,3 +286,12 @@ class TestConstList(TestCase):
             return
         err_msg = 'Error not raised when remove method is called.'
         raise AssertionError(err_msg)
+
+    def test_reverse(self):
+        const_list = const.ConstList(list_value=[100, 200])
+        try:
+            const_list.reverse()
+        except const.ConstantError:
+            return
+        err_msg = 'Error not raised when reverse method is called.'
+        raise AssertionError(err_msg)

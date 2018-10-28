@@ -336,6 +336,19 @@ class ConstList(list):
         err_msg = 'remove method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
+    def reverse(self):
+        """
+        This method will always raise error to disallow list
+        value update.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'reverse method is disallowed to not update list value.'
+        raise ConstantError(err_msg)
+
 
 class Const(object):
     """
