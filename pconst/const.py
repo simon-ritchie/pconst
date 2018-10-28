@@ -432,7 +432,7 @@ class ConstList(list):
             the timing of constructor method is executing.
         """
         if not self._is_constructor:
-            err_msg = 'Constant list value is not editable.'
+            err_msg = 'Constant list value is not allowed.'
             raise ConstantError(err_msg)
         self.__dict__[index] = value
 
