@@ -1,6 +1,3 @@
-- Disable ConstList values updates.
-  - \__reversed__
-  - \__setitem__
 - Adjust ConstList methods.
   - \__repr__
 - Test on Python 3.x environment.

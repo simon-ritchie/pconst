@@ -210,6 +210,9 @@ class ConstList(list):
     ----------
     _original_list : list
         Original list that passed to argument.
+    _is_constructor : bool
+        If current timing is executing constructor,
+        this bool will set to True.
 
     Raises
     ------
@@ -217,7 +220,10 @@ class ConstList(list):
         If the passed value is not list.
     """
 
+    _is_constructor = False
+
     def __init__(self, list_value):
+        self.__dict__['_is_constructor'] = True
         if not isinstance(list_value, list):
             err_msg = 'The type of passed value is not list.'
             raise ValueError(err_msg)
@@ -230,6 +236,7 @@ class ConstList(list):
                 list_value[i] = ConstList(list_value=value)
                 continue
         super(ConstList, self).__init__(list_value)
+        self._is_constructor = False
 
     def append(self, object):
         """
@@ -403,6 +410,31 @@ class ConstList(list):
         """
         err_msg = 'sort method is disallowed to not update list value.'
         raise ConstantError(err_msg)
+
+    def __setitem__(self, index, value):
+        """
+        Update list value at specified index location.
+        Except the timing of constructor method is executing,
+        this method will raise error to disallow list value update
+        (e.g., const_list.a[0] = 1 will raise error).
+
+        Parameters
+        ----------
+        index : int
+            The index location that update list value.
+        value : *
+            The value that apply to specified index.
+
+        Raises
+        ------
+        ConstantError
+            If the case that try to update list value except
+            the timing of constructor method is executing.
+        """
+        if not self._is_constructor:
+            err_msg = 'Constant list value is not editable.'
+            raise ConstantError(err_msg)
+        self.__dict__[index] = value
 
 
 class Const(object):
