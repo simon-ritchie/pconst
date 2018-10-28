@@ -123,7 +123,7 @@ class ConstDict(dict):
         """
         This method will be called when ConstDict object will
         pass to print function. Output will skip class attributes,
-        like _is_constructor.
+        like _is_constructor attribute.
 
         Returns
         -------
@@ -135,7 +135,7 @@ class ConstDict(dict):
         >>> from pconst import const
         >>> const_dict = const.ConstDict({'a': 100})
         >>> print(const_dict)
-        {'a': 100}
+        [Out] {'a': 100}
         """
         return str(self._original_dict)
 
@@ -197,7 +197,7 @@ class ConstDict(dict):
         raise ConstantError(err_msg)
 
 
-class ConstList(object):
+class ConstList(list):
     """
     The class that makes list value not editable.
 
@@ -218,11 +218,18 @@ class ConstList(object):
     """
 
     def __init__(self, list_value):
-        super(ConstList, self).__init__()
         if not isinstance(list_value, list):
             err_msg = 'The type of passed value is not list.'
             raise ValueError(err_msg)
-        self._original_list = list_value
+        self._original_list = deepcopy(list_value)
+        for i, value in enumerate(list_value):
+            if isinstance(value, dict):
+                list_value[i] = ConstDict(dict_val=value)
+                continue
+            if isinstance(value, list):
+                list_value[i] = ConstList(list_value=value)
+                continue
+        super(ConstList, self).__init__(list_value)
 
 
 class Const(object):
@@ -248,13 +255,21 @@ class Const(object):
     >>> from pconst import const
     >>> const.a = 'apple'
     >>> const.a
-    'apple'
+    [Out] 'apple'
 
     # Following code will raise ConstantError.
     >>> const.a = 'apple'
     >>> const.a = 'orange'
-    ...
-    ConstantError: Constant value of "a" is not editable.
+    [Out] ConstantError: Constant value of "a" is not editable.
+
+    # Also can use dict or list.
+    >>> const.fruit = {'apple': 100}
+    >>> const.fruit['apple']
+    [Out] 100
+
+    # Following code will raise ConstantError.
+    >>> const.fruit['apple'] = 200
+    [Out] ConstantError: Update dict value is not allowed.
 
     Notes
     -----

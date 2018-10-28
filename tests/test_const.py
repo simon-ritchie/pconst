@@ -60,6 +60,7 @@ def assert_class_constructor_will_raise_error(
         If specified error not raised.
     """
     try:
+        print('args', args)
         _ = target_class(*args)
     except error_class:
         return
@@ -210,3 +211,23 @@ class TestConstList(TestCase):
         assert_equal(
             const_list._original_list,
             [100, 200])
+        assert_equal(const_list[0], 100)
+        assert_equal(const_list[1], 200)
+        assert_equal(len(const_list), 2)
+
+        const_list = const.ConstList(
+            list_value=[
+                {'a': 100, 'b': {'c': 200}},
+                [300, 400],
+                500])
+        assert_true(
+            isinstance(const_list[0], const.ConstDict))
+        assert_equal(const_list[0]['a'], 100)
+        assert_true(
+            isinstance(const_list[0]['b'], const.ConstDict))
+        assert_equal(const_list[0]['b']['c'], 200)
+        assert_true(
+            isinstance(const_list[1], const.ConstList))
+        assert_equal(const_list[1][0], 300)
+        assert_equal(const_list[1][1], 400)
+        assert_equal(const_list[2], 500)
