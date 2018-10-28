@@ -370,6 +370,27 @@ class ConstList(list):
         err_msg = 'sort method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
+    def __delitem__(self, index):
+        """
+        This method will always raise error to disallow list
+        value update.
+
+        The same is true of writing del operator
+        (e.g., del const_list[0]).
+
+        Parameter
+        ---------
+        index : int
+            The index that will be deleted.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = '__delitem__ method and del operator are disallowed to not update list value.'
+        raise ConstantError(err_msg)
+
 
 class Const(object):
     """

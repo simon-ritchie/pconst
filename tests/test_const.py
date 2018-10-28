@@ -304,3 +304,19 @@ class TestConstList(TestCase):
             return
         err_msg = 'Error not raised when sort method is called.'
         raise AssertionError(err_msg)
+
+    def test___delitem__(self):
+        const_list = const.ConstList(list_value=[100])
+        try:
+            is_error_raised = False
+            const_list.__delitem__(index=0)
+        except const.ConstantError:
+            is_error_raised = True
+        assert_true(is_error_raised)
+
+        try:
+            is_error_raised = False
+            del const_list[0]
+        except const.ConstantError:
+            is_error_raised = True
+        assert_true(is_error_raised)
