@@ -295,3 +295,12 @@ class TestConstList(TestCase):
             return
         err_msg = 'Error not raised when reverse method is called.'
         raise AssertionError(err_msg)
+
+    def test_sort(self):
+        const_list = const.ConstList(list_value=[200, 100])
+        try:
+            const_list.sort()
+        except const.ConstantError:
+            return
+        err_msg = 'Error not raised when sort method is called.'
+        raise AssertionError(err_msg)

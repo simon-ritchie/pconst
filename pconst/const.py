@@ -349,6 +349,27 @@ class ConstList(list):
         err_msg = 'reverse method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
+    def sort(key=None, reverse=False):
+        """
+        This method will always raise error to disallow list
+        value update.
+
+        Parameter
+        ---------
+        key : function or None, default None
+            The function that will be applied to each elements before
+            sorting.
+        reverse : bool, default False
+            If True, sorted result will be reversed order.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'sort method is disallowed to not update list value.'
+        raise ConstantError(err_msg)
+
 
 class Const(object):
     """

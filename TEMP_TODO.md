@@ -1,6 +1,4 @@
 - Disable ConstList values updates.
-  - reverse
-  - sort
   - \__delitem__
   - \__reversed__
   - \__setitem__
@@ -12,4 +10,4 @@
 - Regist to PyPI
 - Add release tag to github.
 - Write Qiita post.
-- Add performance comparison to README.
+- Add performance comparison and attention to README.
