@@ -241,3 +241,12 @@ class TestConstList(TestCase):
             return
         err_msg = 'Error not raised when append method is called.'
         raise AssertionError(err_msg)
+
+    def test_clear(self):
+        const_list = const.ConstList(list_value=[100])
+        try:
+            const_list.clear()
+        except const.ConstantError:
+            return
+        err_msg = 'Error not raised when clear method is called.'
+        raise AssertionError(err_msg)

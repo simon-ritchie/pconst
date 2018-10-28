@@ -1,6 +1,4 @@
 - Disable ConstList values updates.
-  - append
-  - clear
   - extend
   - insert
   - pop
@@ -12,3 +10,4 @@
   - \__setitem__
 - Adjust ConstList methods.
   - \__repr__
+- Add performance comparison to README.

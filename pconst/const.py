@@ -236,12 +236,30 @@ class ConstList(list):
         This method will always raise error to disallow list
         value update.
 
+        Parameters
+        ----------
+        object : *
+            Object that append to list.
+
         Raises
         ------
         ConstantError
             This method will always raise error.
         """
         err_msg = 'append method is disallowed to not update list value.'
+        raise ConstantError(err_msg)
+
+    def clear(self):
+        """
+        This method will always raise error to disallow list
+        value update.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'clear method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
 
