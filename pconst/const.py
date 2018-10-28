@@ -300,6 +300,24 @@ class ConstList(list):
         err_msg = 'insert method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
+    def pop(self, index):
+        """
+        This method will always raise error to disallow list
+        value update.
+
+        Parameters
+        ----------
+        index : int
+            Index position that object will be taken out.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'pop method is disallowed to not update list value.'
+        raise ConstantError(err_msg)
+
 
 class Const(object):
     """

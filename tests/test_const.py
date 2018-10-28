@@ -269,3 +269,11 @@ class TestConstList(TestCase):
         err_msg = 'Error not raised when insert method is called.'
         raise AssertionError(err_msg)
 
+    def test_pop(self):
+        const_list = const.ConstList(list_value=[100])
+        try:
+            const_list.pop(index=0)
+        except const.ConstantError:
+            return
+        err_msg = 'Error not raised when pop method is called.'
+        raise AssertionError(err_msg)
