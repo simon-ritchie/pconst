@@ -338,3 +338,8 @@ class TestConstList(TestCase):
             return
         err_msg = 'Error not raised when updating list value.'
         raise AssertionError(err_msg)
+
+    def test___repr__(self):
+        const_list = const.ConstList(list_value=[100, 200])
+        output_str = const_list.__repr__()
+        assert_equal(output_str, '[100, 200]')

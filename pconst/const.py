@@ -121,8 +121,8 @@ class ConstDict(dict):
 
     def __repr__(self):
         """
-        This method will be called when ConstDict object will
-        pass to print function. Output will skip class attributes,
+        This method will be called when ConstDict object will be
+        passed to print function. Output will skip class attributes,
         like _is_constructor attribute.
 
         Returns
@@ -435,6 +435,26 @@ class ConstList(list):
             err_msg = 'Constant list value is not editable.'
             raise ConstantError(err_msg)
         self.__dict__[index] = value
+
+    def __repr__(self):
+        """
+        This method will be called when ConstList object will be
+        passed to print function. Output will skip class
+        attributes, like _is_constructor attribute.
+
+        Returns
+        -------
+        output_str : str
+            The text that display to console or output cell.
+
+        Examples
+        --------
+        >>> from pconst import const
+        >>> const_list = const.ConstList(list_value=[100, 200])
+        >>> print(const_list)
+        [Out] [100, 200]
+        """
+        return str(self._original_list)
 
 
 class Const(object):
