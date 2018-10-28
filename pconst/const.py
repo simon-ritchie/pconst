@@ -280,6 +280,26 @@ class ConstList(list):
         err_msg = 'extend method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
+    def insert(self, index, object):
+        """
+        This method will always raise error to disallow list
+        value update.
+
+        Parameters
+        ----------
+        index : int
+            Index position that object will be inserted.
+        object : *
+            The object that will be inserted.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'insert method is disallowed to not update list value.'
+        raise ConstantError(err_msg)
+
 
 class Const(object):
     """

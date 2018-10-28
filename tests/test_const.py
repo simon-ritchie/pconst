@@ -259,3 +259,13 @@ class TestConstList(TestCase):
             return
         err_msg = 'Error not raised when extend method is called.'
         raise AssertionError(err_msg)
+
+    def test_insert(self):
+        const_list = const.ConstList(list_value=[100])
+        try:
+            const_list.insert(index=0, object=200)
+        except const.ConstantError:
+            return
+        err_msg = 'Error not raised when insert method is called.'
+        raise AssertionError(err_msg)
+

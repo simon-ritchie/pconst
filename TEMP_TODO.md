@@ -1,5 +1,4 @@
 - Disable ConstList values updates.
-  - extend
   - insert
   - pop
   - remove
@@ -10,4 +9,10 @@
   - \__setitem__
 - Adjust ConstList methods.
   - \__repr__
+- Test on Python 3.x environment.
+- Add install instruction to README.
+- Add how to use instruction to README.
+- Regist to PyPI
+- Add release tag to github.
+- Write Qiita post.
 - Add performance comparison to README.
