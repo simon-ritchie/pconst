@@ -320,3 +320,13 @@ class TestConstList(TestCase):
         except const.ConstantError:
             is_error_raised = True
         assert_true(is_error_raised)
+
+    def test___reversed__(self):
+        const_list = const.ConstList(list_value=[100, 200])
+        try:
+            const_list.__reversed__()
+        except const.ConstantError:
+            print(501)
+            return
+        err_msg = 'Error not raised when __reversed__ method is called.'
+        raise AssertionError(err_msg)

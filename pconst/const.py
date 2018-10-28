@@ -391,6 +391,19 @@ class ConstList(list):
         err_msg = '__delitem__ method and del operator are disallowed to not update list value.'
         raise ConstantError(err_msg)
 
+    def __reversed__(self):
+        """
+        This method will always raise error to disallow list
+        value update.
+
+        Raises
+        ------
+        ConstantError
+            This method will always raise error.
+        """
+        err_msg = 'sort method is disallowed to not update list value.'
+        raise ConstantError(err_msg)
+
 
 class Const(object):
     """

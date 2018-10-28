@@ -1,5 +1,4 @@
 - Disable ConstList values updates.
-  - \__delitem__
   - \__reversed__
   - \__setitem__
 - Adjust ConstList methods.
