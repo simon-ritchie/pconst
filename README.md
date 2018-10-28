@@ -4,7 +4,11 @@
 
 # Install
 
-Currently preparing to install via pip.
+Install via pip is available.
+
+```
+$ pip install pconst
+```
 
 # How to use
 
