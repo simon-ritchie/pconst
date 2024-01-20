@@ -1,3 +1,0 @@
-- Add release tag to github.
-- Write Qiita post.
-- Add performance comparison and attention to README.
