@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: 3.12.0
       - name: Install dependencies
-        run: pip install twine
+        run: pip install twine setuptools
       - name: Execute the Python sdist package build
         run: python setup.py sdist
       - name: Execute the Python bdist_wheel package build
