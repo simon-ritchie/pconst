@@ -14,7 +14,11 @@ setup(
     maintainer='simon-ritchie',
     maintainer_email='antisocial.sid2@gmail.com',
     description='"pconst" library provide you const-like function on Python.',
-    long_description=readme_str,
+    long_description=(
+        '"pconst" library provide you const-like function on Python.'
+        '\n\nFor more details, please see GitHub repository: '
+        'https://github.com/simon-ritchie/pconst'
+    ),
     packages=find_packages(),
     install_requires=[],
     license='MIT',
