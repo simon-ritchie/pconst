@@ -107,6 +107,16 @@ const.APPLE_DATA.update({'season': 'winter'})
 ConstantError: To update dict values is not allowed.
 ```
 
+If you want to allow the setting of the same constant value, calling the `accept_same_value` method will prevent errors. This setting can be convenient in situations where you are running Jupyter cells multiple times.
+
+```py
+const.accept_same_value()
+const.APPLE_PRICE = 100
+
+# Setting the same value like this will not raise an error.
+const.APPLE_PRICE = 100
+```
+
 # For test
 
 Test will be run by nose library (https://nose.readthedocs.io/en/latest/).
