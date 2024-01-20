@@ -12,8 +12,15 @@ NOT_SETTABLE_CONST_NAMES: List[str] = [
     '_has_key',
     '_is_settable_const_name',
     '_is_constructor',
+    '_is_acceptable_value',
+    'accept_same_value',
+    'reject_same_value',
 ]
-ERR_MSG_NOT_SETTABLE_CONST_NAME = 'Specified constant name is not settable. Please set constant name except following list: %s' % NOT_SETTABLE_CONST_NAMES
+
+ERR_MSG_NOT_SETTABLE_CONST_NAME: str = (
+    'Specified constant name is not settable. '
+    f'Please set constant name except following list: {NOT_SETTABLE_CONST_NAMES}'
+)
 
 
 class ConstantError(Exception):
@@ -512,9 +519,13 @@ class Const(object):
     - '_has_key'
     - '_is_settable_const_name'
     - '_is_constructor'
+    - '_is_acceptable_value'
+    - 'accept_same_value'
+    - 'reject_same_value'
     """
 
     _is_constructor: bool = True
+    __accept_same_value: bool = False
 
     def __init__(self) -> None:
         super(Const, self).__init__()
@@ -522,6 +533,18 @@ class Const(object):
         self.ConstDict = ConstDict
         self.ConstList = ConstList
         self._is_constructor = False
+
+    def accept_same_value(self) -> None:
+        """
+        Switch to a setting that allows equivalent value to be set.
+        """
+        self.__accept_same_value = True
+
+    def reject_same_value(self) -> None:
+        """
+        Switch to a setting that does not allow equivalent value to be set.
+        """
+        self.__accept_same_value = False
 
     def _has_key(self, name: str) -> bool:
         """
@@ -588,7 +611,10 @@ class Const(object):
             - If the constant name is not acceptable because of
                 used by class (e.g., name='ConstantError').
         """
-        if self._has_key(name):
+        if self._has_key(name) and not self._is_acceptable_value(
+            const_name=name,
+            const_value=value,
+        ) and not '__' in name:
             err_msg = 'Constant value of "%s" is not editable.' % name
             raise ConstantError(err_msg)
         is_settable = self._is_settable_const_name(
@@ -600,6 +626,31 @@ class Const(object):
         if isinstance(value, list):
             value = ConstList(list_value=value)
         self.__dict__[name] = value
+
+    def _is_acceptable_value(
+        self,
+        const_name: str,
+        const_value: Any,
+    ) -> bool:
+        """
+        Get a boolean whether the specified value is acceptable or not.
+
+        Parameters
+        ----------
+        const_name : str
+            A constant name.
+        const_value : Any
+            A constant value.
+
+        Returns
+        -------
+        result : bool
+            A boolean whether the specified value is acceptable or not.
+        """
+        if not self.__accept_same_value:
+            return False
+        current_attr_value: Any = self.__dict__.get(const_name)
+        return current_attr_value == const_value
 
     def __delattr__(self, name: str) -> None:
         """

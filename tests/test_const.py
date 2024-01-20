@@ -2,14 +2,13 @@
 The test module of const.py.
 """
 
-from __future__ import print_function
-from importlib import reload
 import sys
 sys.path.append('../')
 
 from unittest import TestCase
-from nose.tools import assert_equal, assert_true, assert_false, \
-    assert_raises
+from nose.tools import (  # type: ignore
+    assert_equal, assert_true, assert_false,
+)
 
 from pconst import const
 
@@ -97,11 +96,11 @@ class TestConst(TestCase):
 
         const.d = {'apple': 100}
         assert_true(isinstance(const.d, const.ConstDict))
-        assert_equal(const.d['apple'], 100)
+        assert_equal(const.d['apple'], 100)  # type: ignore
 
         const.e = ['100']
         assert_true(isinstance(const.e, const.ConstList))
-        assert_equal(const.e[0], '100')
+        assert_equal(const.e[0], '100')  # type: ignore
 
     def test___delattr__(self):
         try:
@@ -120,6 +119,45 @@ class TestConst(TestCase):
         except const.ConstantError:
             return
         raise AssertionError('ConstantError is not raised.')
+
+    def test_accept_same_value(self) -> None:
+        const.accept_same_value()
+        const.h = 100
+        const.h = 100
+        const.reject_same_value()
+
+    def test_reject_same_value(self) -> None:
+        const.reject_same_value()
+        const.i = 100
+        try:
+            const.i = 100
+        except const.ConstantError:
+            pass
+        else:
+            raise AssertionError('ConstantError not raised.')
+
+    def test__is_acceptable_value(self) -> None:
+        const.accept_same_value()
+
+        const.f = 100
+        const.f = 100
+        try:
+            const.f = 200
+        except const.ConstantError:
+            pass
+        else:
+            raise AssertionError('ConstantError not raised.')
+
+        const.g = [100, 200]
+        const.g = [100, 200]
+        try:
+            const.g = [200, 300]
+        except const.ConstantError:
+            pass
+        else:
+            raise AssertionError('ConstantError not raised.')
+
+        const.reject_same_value()
 
 
 class TestConstDict(TestCase):
