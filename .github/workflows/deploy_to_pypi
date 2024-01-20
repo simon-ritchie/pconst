@@ -2,7 +2,7 @@ name: Deploy to PyPI
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   DeployToPyPI:
     runs-on: ubuntu-latest
