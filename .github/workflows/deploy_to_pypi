@@ -1,0 +1,26 @@
+name: Deploy to PyPI
+on:
+  push:
+    branches:
+      - main
+jobs:
+  DeployToPyPI:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set the Python version
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.12.0
+      - name: Install dependencies
+        run: pip install twine
+      - name: Execute the Python sdist package build
+        run: python setup.py sdist
+      - name: Execute the Python bdist_wheel package build
+        run: python setup.py bdist_wheel
+      - name: Upload to PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
