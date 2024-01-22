@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 """
 The test module of const.py.
 """
@@ -120,13 +122,13 @@ class TestConst(TestCase):
             return
         raise AssertionError('ConstantError is not raised.')
 
-    def test_accept_same_value(self) -> None:
+    def test_accept_same_value(self):
         const.accept_same_value()
         const.h = 100
         const.h = 100
         const.reject_same_value()
 
-    def test_reject_same_value(self) -> None:
+    def test_reject_same_value(self):
         const.reject_same_value()
         const.i = 100
         try:
@@ -136,7 +138,7 @@ class TestConst(TestCase):
         else:
             raise AssertionError('ConstantError not raised.')
 
-    def test__is_acceptable_value(self) -> None:
+    def test__is_acceptable_value(self):
         const.accept_same_value()
 
         const.f = 100

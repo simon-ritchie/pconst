@@ -1,11 +1,12 @@
+# coding: UTF-8
+
 """
 This module provides const-like function on Python.
 """
 
 from copy import deepcopy
-from typing import Any, Dict, List, Iterable
 
-NOT_SETTABLE_CONST_NAMES: List[str] = [
+NOT_SETTABLE_CONST_NAMES = [
     'ConstantError',
     'ConstDict',
     'ConstList',
@@ -17,9 +18,9 @@ NOT_SETTABLE_CONST_NAMES: List[str] = [
     'reject_same_value',
 ]
 
-ERR_MSG_NOT_SETTABLE_CONST_NAME: str = (
+ERR_MSG_NOT_SETTABLE_CONST_NAME = (
     'Specified constant name is not settable. '
-    f'Please set constant name except following list: {NOT_SETTABLE_CONST_NAMES}'
+    'Please set constant name except following list: %s' % NOT_SETTABLE_CONST_NAMES
 )
 
 
@@ -33,7 +34,7 @@ class ConstantError(Exception):
         error message that will display on console.
     """
 
-    def __init__(self, err_msg: str):
+    def __init__(self, err_msg):
         super(ConstantError, self).__init__(err_msg)
 
 
@@ -61,7 +62,7 @@ class ConstDict(dict):
     """
     _is_constructor = False
 
-    def __init__(self, dict_val: Dict[Any, Any]):
+    def __init__(self, dict_val):
         self.__dict__['_is_constructor'] = True
         if not isinstance(dict_val, dict):
             err_msg = 'The type of passed value is not dict.'
@@ -74,9 +75,8 @@ class ConstDict(dict):
 
     def _replace_dict_val_to_const(
         self,
-        dict_val:
-        Dict[Any, Any],
-    ) -> Dict[Any, Any]:
+        dict_val,
+    ):
         """
         Replace values in dict to ConstDict or ConstList.
 
@@ -105,7 +105,7 @@ class ConstDict(dict):
                 continue
         return dict_val
 
-    def __setitem__(self, key: str, item: Any) -> None:
+    def __setitem__(self, key, item):
         """
         This method will always raise error except during executing
         constructor in order to prevent the dict value update.
@@ -125,11 +125,11 @@ class ConstDict(dict):
             executing constructor.
         """
         if not self._is_constructor:
-            err_msg: str = "Update dict value is not allowed."
+            err_msg = "Update dict value is not allowed."
             raise ConstantError(err_msg)
         self.__dict__[key] = item
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         """
         This method will be called when ConstDict object will be
         passed to print function. Output will skip class attributes,
@@ -149,7 +149,7 @@ class ConstDict(dict):
         """
         return str(self._original_dict)
 
-    def __delitem__(self, key: str) -> None:
+    def __delitem__(self, key):
         """
         This method will always raise error to disallow dict
         value deletion.
@@ -164,10 +164,10 @@ class ConstDict(dict):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = 'Deletion of dict value is not allowed.'
+        err_msg = 'Deletion of dict value is not allowed.'
         raise ConstantError(err_msg)
 
-    def clear(self) -> None:
+    def clear(self):
         """
         This method will always raise error to disallow dict
         value deletion.
@@ -177,10 +177,10 @@ class ConstDict(dict):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = 'To reset dict values is not allowed.'
+        err_msg = 'To reset dict values is not allowed.'
         raise ConstantError(err_msg)
 
-    def update(self, *args: Any, **kwargs: Any) -> None:
+    def update(self, *args, **kwargs):
         """
         This method will always raise error to disallow dict
         value update.
@@ -190,10 +190,10 @@ class ConstDict(dict):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = 'To update dict values is not allowed.'
+        err_msg = 'To update dict values is not allowed.'
         raise ConstantError(err_msg)
 
-    def pop(self, *args: Any) -> Any:
+    def pop(self, *args):
         """
         This method will always raise error to disallow dict
         value update.
@@ -203,7 +203,7 @@ class ConstDict(dict):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = 'pop method is disallowed to not update dict value.'
+        err_msg = 'pop method is disallowed to not update dict value.'
         raise ConstantError(err_msg)
 
 
@@ -230,12 +230,12 @@ class ConstList(list):
         If the passed value is not list.
     """
 
-    _is_constructor: bool = False
+    _is_constructor = False
 
-    def __init__(self, list_value: Any) -> None:
+    def __init__(self, list_value):
         self.__dict__['_is_constructor'] = True
         if not isinstance(list_value, list):
-            err_msg: str = 'The type of passed value is not list.'
+            err_msg = 'The type of passed value is not list.'
             raise ValueError(err_msg)
         self._original_list = deepcopy(list_value)
         for i, value in enumerate(list_value):
@@ -248,7 +248,7 @@ class ConstList(list):
         super(ConstList, self).__init__(list_value)
         self._is_constructor = False
 
-    def append(self, object: Any) -> None:
+    def append(self, object):
         """
         This method will always raise error to disallow list
         value update.
@@ -263,10 +263,10 @@ class ConstList(list):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = 'append method is disallowed to not update list value.'
+        err_msg = 'append method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
-    def clear(self) -> None:
+    def clear(self):
         """
         This method will always raise error to disallow list
         value update.
@@ -276,10 +276,10 @@ class ConstList(list):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = 'clear method is disallowed to not update list value.'
+        err_msg = 'clear method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
-    def extend(self, iterable: Iterable) -> None:
+    def extend(self, iterable):
         """
         This method will always raise error to disallow list
         value update.
@@ -297,7 +297,7 @@ class ConstList(list):
         err_msg = 'extend method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
-    def insert(self, index: int, object: Any) -> None:
+    def insert(self, index, object):
         """
         This method will always raise error to disallow list
         value update.
@@ -314,10 +314,10 @@ class ConstList(list):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = 'insert method is disallowed to not update list value.'
+        err_msg = 'insert method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
-    def pop(self, index: int) -> None:
+    def pop(self, index):
         """
         This method will always raise error to disallow list
         value update.
@@ -332,10 +332,10 @@ class ConstList(list):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = 'pop method is disallowed to not update list value.'
+        err_msg = 'pop method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
-    def remove(self, value: Any) -> None:
+    def remove(self, value):
         """
         This method will always raise error to disallow list
         value update.
@@ -350,10 +350,10 @@ class ConstList(list):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = 'remove method is disallowed to not update list value.'
+        err_msg = 'remove method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
-    def reverse(self) -> None:
+    def reverse(self):
         """
         This method will always raise error to disallow list
         value update.
@@ -366,7 +366,7 @@ class ConstList(list):
         err_msg = 'reverse method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
-    def sort(self, key: Any = None, reverse: bool = False) -> None:
+    def sort(self, key=None, reverse=False):
         """
         This method will always raise error to disallow list
         value update.
@@ -384,10 +384,10 @@ class ConstList(list):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = 'sort method is disallowed to not update list value.'
+        err_msg = 'sort method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
-    def __delitem__(self, index: int) -> None:
+    def __delitem__(self, index):
         """
         This method will always raise error to disallow list
         value update.
@@ -405,13 +405,13 @@ class ConstList(list):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = (
+        err_msg = (
             '__delitem__ method and del operator are disallowed '
             'to not update list value.'
         )
         raise ConstantError(err_msg)
 
-    def __reversed__(self) -> None:
+    def __reversed__(self):
         """
         This method will always raise error to disallow list
         value update.
@@ -421,10 +421,10 @@ class ConstList(list):
         ConstantError
             This method will always raise error.
         """
-        err_msg: str = 'sort method is disallowed to not update list value.'
+        err_msg = 'sort method is disallowed to not update list value.'
         raise ConstantError(err_msg)
 
-    def __setitem__(self, index: Any, value: Any) -> None:
+    def __setitem__(self, index, value):
         """
         Update list value at specified index location.
         Except the timing of constructor method is executing,
@@ -445,11 +445,11 @@ class ConstList(list):
             the timing of constructor method is executing.
         """
         if not self._is_constructor:
-            err_msg: str = 'Constant list value is not allowed.'
+            err_msg = 'Constant list value is not allowed.'
             raise ConstantError(err_msg)
         self.__dict__[index] = value
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         """
         This method will be called when ConstList object will be
         passed to print function. Output will skip class
@@ -524,29 +524,29 @@ class Const(object):
     - 'reject_same_value'
     """
 
-    _is_constructor: bool = True
-    __accept_same_value: bool = False
+    _is_constructor = True
+    __accept_same_value = False
 
-    def __init__(self) -> None:
+    def __init__(self):
         super(Const, self).__init__()
         self.ConstantError = ConstantError
         self.ConstDict = ConstDict
         self.ConstList = ConstList
         self._is_constructor = False
 
-    def accept_same_value(self) -> None:
+    def accept_same_value(self):
         """
         Switch to a setting that allows equivalent value to be set.
         """
         self.__accept_same_value = True
 
-    def reject_same_value(self) -> None:
+    def reject_same_value(self):
         """
         Switch to a setting that does not allow equivalent value to be set.
         """
         self.__accept_same_value = False
 
-    def _has_key(self, name: str) -> bool:
+    def _has_key(self, name):
         """
         Return True if this class has the attribute of specified name.
 
@@ -563,7 +563,7 @@ class Const(object):
         """
         return name in self.__dict__
 
-    def _is_settable_const_name(self, const_name: str) -> bool:
+    def _is_settable_const_name(self, const_name):
         """
         Return True if specified const_name is not in
         NOT_SETTABLE_CONST_NAMES list.
@@ -592,7 +592,7 @@ class Const(object):
             return False
         return True
 
-    def __setattr__(self, name: str, value: Any) -> None:
+    def __setattr__(self, name, value):
         """
         Set value to class attribute. When property will updated,
         this method will be called (e.g., const.a = 100).
@@ -629,9 +629,9 @@ class Const(object):
 
     def _is_acceptable_value(
         self,
-        const_name: str,
-        const_value: Any,
-    ) -> bool:
+        const_name,
+        const_value,
+    ):
         """
         Get a boolean whether the specified value is acceptable or not.
 
@@ -649,10 +649,10 @@ class Const(object):
         """
         if not self.__accept_same_value:
             return False
-        current_attr_value: Any = self.__dict__.get(const_name)
+        current_attr_value = self.__dict__.get(const_name)
         return current_attr_value == const_value
 
-    def __delattr__(self, name: str) -> None:
+    def __delattr__(self, name):
         """
         This method will raise error in order to prevent the
         constants deletion.
@@ -672,7 +672,7 @@ class Const(object):
         err_msg = 'Constant values are not deletable.'
         raise ConstantError(err_msg)
 
-    def __getattr__(self, name: str) -> None:
+    def __getattr__(self, name):
         """
         Get the attribute value of specified constant name. When
         accessed const property, this method will be called
